@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مستندات API ساندکلود</title>
+    <meta name="description" content="API soundcloud By ALIILAPRO">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #ff7700;
+            --secondary-color: #333;
+            --background-color: #f9f9f9;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-color: #e0e0e0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--primary-color), #ff5500);
+            color: white;
+            padding: 2rem 1rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem 1rem;
+        }
+        
+        .section {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border-color);
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+            font-size: 1.8rem;
+        }
+        
+        h3 {
+            margin: 1.5rem 0 1rem;
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+        }
+        
+        p {
+            margin-bottom: 1rem;
+        }
+        
+        .endpoint {
+            background-color: #f5f5f5;
+            border-radius: 6px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-right: 4px solid var(--primary-color);
+        }
+        
+        .method {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .url {
+            font-family: monospace;
+            background-color: #eee;
+            padding: 0.8rem 1rem;
+            border-radius: 4px;
+            margin: 0.5rem 0;
+            word-break: break-all;
+            border: 1px solid #ddd;
+        }
+        
+        .param-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        .param-table th, .param-table td {
+            padding: 0.8rem;
+            text-align: right;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .param-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        .code-block {
+            background-color: #2d2d2d;
+            color: #f8f8f2;
+            padding: 1.5rem;
+            border-radius: 6px;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+        
+        .response-example {
+            margin-top: 1.5rem;
+        }
+        
+        .field-desc {
+            margin-top: 2rem;
+        }
+        
+        .field-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .field-name {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .field-type {
+            display: inline-block;
+            background-color: #e0e0e0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+        
+        .developer-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+        
+        .developer-card {
+            flex: 1;
+            min-width: 300px;
+            background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1px solid #ddd;
+        }
+        
+        .developer-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .contact-links {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.8rem;
+            background-color: white;
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .contact-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            color: var(--primary-color);
+        }
+        
+        .contact-link i {
+            font-size: 1.2rem;
+            width: 24px;
+            text-align: center;
+        }
+        
+        .github-link {
+            border-left: 4px solid #333;
+        }
+        
+        .telegram-link {
+            border-left: 4px solid #0088cc;
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 1rem;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+            
+            .developer-info {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>مستندات API ساندکلود</h1>
+        <p class="subtitle">API برای دریافت اطلاعات و لینک دانلود ترک‌های ساندکلود</p>
+    </header>
+    
+    <div class="container">
+        <section class="section">
+            <h2>معرفی</h2>
+            <p>این API امکان دریافت اطلاعات ترک‌های ساندکلود و لینک دانلود آن‌ها را فراهم می‌کند. این API دو روش برای دریافت اطلاعات ارائه می‌دهد: با استفاده از URL ترک و با استفاده از ID ترک.</p>
+        </section>
+        
+        <section class="section">
+            <h2>نحوه استفاده</h2>
+            
+            <div class="endpoint">
+                <div class="method">GET</div>
+                <h3>دریافت اطلاعات با URL</h3>
+                <div class="url">http://mydomain/_apiSoundCloud.php?token={token}&url={url}</div>
+                <p>این درخواست اطلاعات مربوط به یک ترک ساندکلود را با استفاده از URL آن برمی‌گرداند.</p>
+                
+                <h4>پارامترها</h4>
+                <table class="param-table">
+                    <tr>
+                        <th>نام</th>
+                        <th>نوع</th>
+                        <th>توضیحات</th>
+                    </tr>
+                    <tr>
+                        <td>url</td>
+                        <td>رشته</td>
+                        <td>آدرس کامل ترک در ساندکلود (اجباری)</td>
+                    </tr>
+                    <tr>
+                        <td>token</td>
+                        <td>رشته</td>
+                        <td>کلید اختصاصی  هر فرد که موقع خرید به کاربر تحویل داده می شود</td>
+                    </tr>
+                </table>
+                
+                <h4>مثال</h4>
+                <div class="code-block">
+                    http://mydomain/_apiSoundCloud.php?token=token123456&url=https://soundcloud.com/user-551524139/cakal-riv-riv-riv
+                </div>
+            </div>
+            
+            <div class="endpoint">
+                <div class="method">GET</div>
+                <h3>دریافت اطلاعات با ID</h3>
+                <div class="url">http://mydomain/_apiSoundCloud.php?token={token}&id={id}</div>
+                <p>این درخواست اطلاعات مربوط به یک ترک ساندکلود را با استفاده از ID آن برمی‌گرداند.</p>
+                
+                <h4>پارامترها</h4>
+                <table class="param-table">
+                    <tr>
+                        <th>نام</th>
+                        <th>نوع</th>
+                        <th>توضیحات</th>
+                    </tr>
+                    <tr>
+                        <td>id</td>
+                        <td>عدد</td>
+                        <td>شناسه ترک در ساندکلود (اجباری)</td>
+                    </tr>
+                    <tr>
+                        <td>token</td>
+                        <td>رشته</td>
+                        <td>کلید اختصاصی  هر فرد که موقع خرید به کاربر تحویل داده می شود</td>
+                    </tr>
+                </table>
+                
+                <h4>مثال</h4>
+                <div class="code-block">
+                    http://mydomain/_apiSoundCloud.php?token=token123456&id=1114581718
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>نمونه پاسخ</h2>
+            <p>پاسخ API به صورت JSON و با ساختار زیر بازگردانده می‌شود:</p>
+            
+            <div class="code-block">
+                {
+                    "status": 200,
+                    "message": "Successful",
+                    "data": {
+                        "size": "1.86 MB",
+                        "favorite": "0",
+                        "comment": "13",
+                        "title": "Cakal - Riv Riv Riv",
+                        "id": 1114581718,
+                        "artwork_url": "https:\/\/mydomain\/sc.jpg",
+                        "avatar_url": "https:\/\/i1.sndcdn.com\/avatars-OKLCBAKM6sxn5kIm-FxnY9Q-t500x500.jpg",
+                        "created_at": "2021-08-28T14:41:43Z",
+                        "username": "\u0130t Gece Havlar",
+                        "dl": "https:\/\/cf-media.sndcdn.com\/2eX2Q6UPab4x.128.mp3?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiKjovL2NmLW1lZGlhLnNuZGNkbi5jb20vMmVYMlE2VVBhYjR4LjEyOC5tcDMqIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzYwMzk3MDMzfX19XX0_&Signature=V~DSFFumoPfmo2Hm4PucdrDyuj79gD2KHnBvffBygBGJuqrIgTC1l4VM6uGSfvPVYJhwEgC6jN9Yxe~NfnwkFxUHGmg-QyqqbXIyTiDjPcNB0J8tPsPbZaCFJBYVHeIX6GbB86eV2G8lsI8JSpcTn1tRYVYGDZJk~8owbDYnycc9skrvQiXwpYblIhCYffV3Q1Z4rj5xrAnsn7XozJIBmXSeEA46cMRdBPCcOUckhMo-Uab8Maz2hiLSUqKWU-4WiwhbrpWYC62m2AxbE7jxSjcX6-gf8uxB14nGyNmCpMNeZn2liGlik6cJvQav-R8Ye1GIstRiPfR~CELlTdqEsQ__&Key-Pair-Id=APKAI6TU7MMXM5DG6EPQ",
+                        "genre": "Hip-hop & Rap",
+                        "allowupload": "yes"
+                    }
+                }
+            </div>
+            
+            <div class="field-desc">
+                <h3>توضیحات فیلدها</h3>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">allowupload</span>
+                    <p>نشان می‌دهد آیا آپلود مجاز است یا خیر (مقادیر: yes/no)</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">size</span>
+                    <p>حجم فایل صوتی</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">favorite</span>
+                    <p>تعداد علاقه‌مندی‌ها</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">comment</span>
+                    <p>تعداد نظرات</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">title</span>
+                    <p>عنوان ترک</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">عدد</span>
+                    <span class="field-name">id</span>
+                    <p>شناسه یکتای ترک در ساندکلود</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">artwork_url</span>
+                    <p>آدرس تصویر کاور ترک</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">avatar_url</span>
+                    <p>آدرس تصویر پروفایل کاربر</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">created_at</span>
+                    <p>تاریخ و زمان ایجاد ترک (فرت ISO 8601)</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">username</span>
+                    <p>نام کاربری صاحب ترک</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">dl</span>
+                    <p>لینک مستقیم دانلود فایل صوتی</p>
+                </div>
+                
+                <div class="field-item">
+                    <span class="field-type">رشته</span>
+                    <span class="field-name">genre</span>
+                    <p>سبک موسیقی</p>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2>خطاها</h2>
+            <p>در صورت بروز خطا، API پاسخ مناسب با کد وضعیت HTTP و پیام خطا بازمی‌گرداند. برخی از کدهای خطای رایج:</p>
+            
+            <table class="param-table">
+                <tr>
+                    <th>کد وضعیت</th>
+                    <th>توضیحات</th>
+                </tr>
+                <tr>
+                    <td>400</td>
+                    <td>درخواست نامعتبر (پارامترهای ضروری ارسال نشده‌اند)</td>
+                </tr>
+                <tr>
+                    <td>404</td>
+                    <td>ترک مورد نظر یافت نشد</td>
+                </tr>
+                <tr>
+                    <td>500</td>
+                    <td>خطای سرور داخلی</td>
+                </tr>
+            </table>
+        </section>
+        
+        <section class="section">
+            <h2>توسعه‌دهنده</h2>در صورت نیاز به پشتیبانی یا گزارش مشکل می‌توانید از طریق راه‌های ارتباطی زیر با من در تماس باشید.</p>
+            
+            <div class="developer-info">
+                <div class="developer-card">
+                    <h3><i class="fas fa-user"></i> اطلاعات توسعه‌دهنده</h3>
+                    <p><strong>نام:</strong> علی هستم 😎</p>
+                    <p><strong>تخصص:</strong> توسعه API و برنامه‌نویس</p>
+                    <p><strong>توضیحات:</strong> یه برنامه نویس ساده در پی خودم نه دیگری....</p>
+                    
+                    <div class="contact-links">
+                        <a href="https://github.com/aliilapro" class="contact-link github-link" target="_blank">
+                            <i class="fab fa-github"></i>
+                            <div>
+                                <strong>گیت‌هاب</strong>
+                                <div>ALIILAPRO</div>
+                            </div>
+                        </a>
+                        
+                        <a href="https://t.me/ALIILAPRO" class="contact-link telegram-link" target="_blank">
+                            <i class="fab fa-telegram"></i>
+                            <div>
+                                <strong>تلگرام (پشتیبانی)</strong>
+                                <div>ALIILAPRO</div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="developer-card">
+                    <h3><i class="fas fa-headset"></i> پشتیبانی</h3>
+                    <p>برای گزارش مشکلات فنی، پیشنهادات یا سوالات در مورد API می‌توانید از طریق تلگرام با من در تماس باشید.</p>
+                    
+                    <ul style="padding-right: 1.5rem; margin-top: 1rem;">
+                        <li>پاسخ‌گویی در ساعات نامعلوم😉</li>
+                        <li>پشتیبانی از مشکلات فنی</li>
+                        <li>دریافت پیشنهادات برای بهبود API</li>
+                        <li>همکاری و پروژه‌های مشترک</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+    </div>
+    
+    <footer>
+        <p>© 2025 - مستندات API ساندکلود | توسعه داده شده توسط [ALIILAPRO]</p>
+    </footer>
+</body>
+</html>
